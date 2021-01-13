@@ -36,7 +36,16 @@ For COCO-Stuff, Cityscapes or ADE20K, please follow the instructions for the dat
 
 ## Training the model
 
-To train the model, execute the scripts in the ```scripts``` folder. However, in these scripts you first need to specify the path to the data folder, a name for the experiment (optional but advised) as well as the path where all experimental results should be saved. This experiments folder can look like ```/username/home/results```. In this case, everytime the training script is executed a new folder will be created in ```/username/home/results``` with name of the experiment, e.g. ```/username/home/results/oasis_ade20k, /username/home/results/oasis_cityscapes``` and so forth.
+To train the model, execute the training scripts in the ```scripts``` folder. However, in these scripts you first need to specify the path to the data folder. Via the ```--name``` paramter the experiment can be given a unique identifier. The experimental results are then saved in the folder ```./checkpoints```, where a new folder for each run is created with the specified experiment name. You can also specify another folder for the checkpoints using the ```--checkpoints_dir``` parameter.
+If you want to continue training, start the respective script with the ```--continue_train``` flag.
+
+## Testing the model
+
+To test a model, execute the testing scripts in the ```scripts``` folder. The ```--name``` parameter should correspond to the experiment name that you want to test, and the ```--checkpoints_dir``` should the folder where the experiment is saved (default: ```./checkpoints```). These scripts will generate images from a pretrained model.
+
+## Pretrained models
+
+We will upload the pretrained models soon.
 
 ## Citation
 If you use this work please cite
