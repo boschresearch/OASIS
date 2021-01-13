@@ -77,7 +77,7 @@ Please feel free to contact us personally if you have questions, need help, or n
 Write to one of the following email addresses:
 
 edgarschoenfeld@live.de  
-vad221@gmail.com
+vad221@gmail.com  
 edgar.schoenfeld@bosch.com  
 vadim.sushko@bosch.com  
 
