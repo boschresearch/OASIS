@@ -23,7 +23,7 @@ git clone https://github.com/boschresearch/OASIS.git
 cd OASIS
 ```
 
-The code is tested for 3.7.6 and the packages listed in [oasis.yml](oasis.yml). 
+The code is tested for Python 3.7.6 and the packages listed in [oasis.yml](oasis.yml). 
 The basic requirements are PyTorch and Torchvision. 
 The easiest way to get going is to install the oasis conda environment via 
 ```
