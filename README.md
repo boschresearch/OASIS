@@ -20,13 +20,20 @@ This software is a research prototype, solely developed for and published as
 part of the publication [cited above | paper reference]. It will neither be
 maintained nor monitored in any way.
 
-## Requirements, how to build, test, install, use, etc.
+## Setup
 
-Some technical information...
+The code is tested for 3.7.6 and the packages listed in [oasis.yml](oasis.yml). 
+The easiest way to get going is to install the oasis conda environment via 
+```
+conda env create --file oasis.yml
+source activate oasis
+```
+
+## Training the model
 
 ## License
 
-PROJECT-NAME is open-sourced under the AGPL-3.0 license. See the
+This project is open-sourced under the AGPL-3.0 license. See the
 [LICENSE](LICENSE) file for details.
 
 For a list of other open source components included in this project, see the
