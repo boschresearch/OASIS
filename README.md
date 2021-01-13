@@ -75,7 +75,10 @@ maintained nor monitored in any way.
 ## Contact
 Please feel free to contact us personally if you have questions, need help, or need explanations. 
 Write to one of the following email addresses:
-edgarschoenfeld@live.de
-edgar.schoenfeld@bosch.com
+
+edgarschoenfeld@live.de,
+
+edgar.schoenfeld@bosch.com,
+
 vadim.sushko@bosch.com
 
