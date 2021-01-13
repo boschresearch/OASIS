@@ -1,10 +1,13 @@
-# PROJECT-NAME
+# You Only Need Adversarial Supervision for Semantic Image Synthesis
 
-This is the companion code for the benchmarking study reported in the paper
-Comparative Study of Some Great Frameworks by Jon Hacker et al. The paper can
-be found here http://arxiv.org/abs/xxxx.xxxx. The code allows the users to
-reproduce and extend the results reported in the study. [...] Please cite the
-above paper when reporting, reproducing or extending the results.
+<p align="center">
+<img src="overview.png" width="500">
+</p>
+
+Official PyTorch implementation of the ICLR 2021 paper "You Only Need Adversarial Supervision for Semantic Image Synthesis". The code allows the users to
+reproduce and extend the results reported in the study. Please cite the paper when reporting, reproducing or extending the results.
+
+[[OpenReview](https://openreview.net/forum?id=yvQKLaqNE6M)]  [[Arxiv](https://arxiv.org/abs/2012.04781)]  
 
 ## Purpose of the project
 
