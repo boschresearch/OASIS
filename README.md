@@ -45,7 +45,7 @@ To test a model, execute the testing scripts in the ```scripts``` folder. The ``
 
 ## Pretrained models
 
-We will upload the pretrained models soon.
+We will upload the pretrained models soon. 
 
 ## Citation
 If you use this work please cite
