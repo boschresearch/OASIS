@@ -38,6 +38,17 @@ For COCO-Stuff, Cityscapes or ADE20K, please follow the instructions for the dat
 
 To train the model, execute the scripts in the ```scripts``` folder. However, in these scripts you first need to specify the path to the data folder, a name for the experiment (optional but advised) as well as the path where all experimental results should be saved. This experiments folder can look like ```/username/home/results```. In this case, everytime the training script is executed a new folder will be created in ```/username/home/results``` with name of the experiment, e.g. ```/username/home/results/oasis_ade20k, /username/home/results/oasis_cityscapes``` and so forth.
 
+## Citation
+If you use this work please cite
+```
+@inproceedings{schonfeld_sushko,
+  title={You Only Need Adversarial Supervision for Semantic Image Synthesis},
+  author={Sch{\"o}nfeld, Edgar and Sushko, Vadim and Zhang, Dan and Gall, Juergen and Schiele, Bernt and Khoreva, Anna},
+  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition Workshops},
+  year={2021}
+}   
+```
+
 ## License
 
 This project is open-sourced under the AGPL-3.0 license. See the
@@ -51,3 +62,11 @@ file [3rd-party-licenses.txt](3rd-party-licenses.txt).
 This software is a research prototype, solely developed for and published as
 part of the publication [cited above | paper reference]. It will neither be
 maintained nor monitored in any way.
+
+## Contact
+Please feel free to contact us personally if you have questions, need help, or need explanations. 
+Write to one of the following email addresses:
+edgarschoenfeld@live.de
+edgar.schoenfeld@bosch.com
+vadim.sushko@bosch.com
+
