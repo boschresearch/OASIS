@@ -53,7 +53,7 @@ If you use this work please cite
 @inproceedings{schonfeld_sushko,
   title={You Only Need Adversarial Supervision for Semantic Image Synthesis},
   author={Sch{\"o}nfeld, Edgar and Sushko, Vadim and Zhang, Dan and Gall, Juergen and Schiele, Bernt and Khoreva, Anna},
-  booktitle={Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition Workshops},
+  booktitle={International Conference on Learning Representations},
   year={2021}
 }   
 ```
