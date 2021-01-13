@@ -69,7 +69,7 @@ file [3rd-party-licenses.txt](3rd-party-licenses.txt).
 ## Purpose of the project
 
 This software is a research prototype, solely developed for and published as
-part of the publication [cited above | paper reference]. It will neither be
+part of the publication cited above. It will neither be
 maintained nor monitored in any way.
 
 ## Contact
