@@ -93,7 +93,7 @@ part of the publication cited above. It will neither be
 maintained nor monitored in any way.
 
 ## Contact
-Please feel free to open an issue or contact us personally if you find bugs, have questions, need help, or need explanations.
+Please feel free to open an issue or contact us personally if you have questions, need help, or need explanations.
 Write to one of the following email addresses:
 
 edgarschoenfeld@live.de  
