@@ -5,7 +5,7 @@ reproduce and extend the results reported in the study. Please cite the paper wh
 
 [[OpenReview](https://openreview.net/forum?id=yvQKLaqNE6M)]  [[Arxiv](https://arxiv.org/abs/2012.04781)]  
 
-# Overview 
+# Overview
 
 This repository implements the OASIS model, which generates realistic looking images from semantic label maps. In addition, many different images can be generated from any given label map by simply resampling a noise vector (first two rows of the figure below). The model also allows to just resample parts of the image (see the last two rows of the figure below). Check out the paper for details, as well as the appendix, which contains many additional examples.
 
@@ -23,14 +23,14 @@ git clone https://github.com/boschresearch/OASIS.git
 cd OASIS
 ```
 
-The code is tested for Python 3.7.6 and the packages listed in [oasis.yml](oasis.yml). 
-The basic requirements are PyTorch and Torchvision. 
-The easiest way to get going is to install the oasis conda environment via 
+The code is tested for Python 3.7.6 and the packages listed in [oasis.yml](oasis.yml).
+The basic requirements are PyTorch and Torchvision.
+The easiest way to get going is to install the oasis conda environment via
 ```
 conda env create --file oasis.yml
 source activate oasis
 ```
-## Datasets 
+## Datasets
 
 For COCO-Stuff, Cityscapes or ADE20K, please follow the instructions for the dataset preparation as outlined in [https://github.com/NVlabs/SPADE](https://github.com/NVlabs/SPADE).
 
@@ -43,9 +43,13 @@ If you want to continue training, start the respective script with the ```--cont
 
 To test a model, execute the testing scripts in the ```scripts``` folder. The ```--name``` parameter should correspond to the experiment name that you want to test, and the ```--checkpoints_dir``` should the folder where the experiment is saved (default: ```./checkpoints```). These scripts will generate images from a pretrained model.
 
+## Measuring FID
+
+The FID is computed on the fly during training, using the popular PyTorch FID implementation from https://github.com/mseitzer/pytorch-fid. At the beginning of training, the inception moments of the real images are computed before the actual training loop starts. How frequently the FID should be evaluated is controlled via the parameter ```--freq_fid```, which is set to 5000 steps by default. The inception net that is used for FID computation automatically downloads a pre-trained inception net checkpoint. If that automatic download fails, for instance because your server has restricted internet access, get the checkpoint from [here](https://www.dropbox.com/sh/nf6of02pyk84zjg/AAC8hnnj0T_MAiPx3tzdAyiWa?dl=0) and place it in ```/utils/fid_folder/```.
+
 ## Pretrained models
 
-We will upload the pretrained models soon. 
+We will upload the pretrained models soon.
 
 ## Citation
 If you use this work please cite
@@ -73,11 +77,10 @@ part of the publication cited above. It will neither be
 maintained nor monitored in any way.
 
 ## Contact
-Please feel free to contact us personally if you have questions, need help, or need explanations. 
+Please feel free to contact us personally if you have questions, need help, or need explanations.
 Write to one of the following email addresses:
 
 edgarschoenfeld@live.de  
 vad221@gmail.com  
 edgar.schoenfeld@bosch.com  
 vadim.sushko@bosch.com  
-
