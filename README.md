@@ -93,7 +93,7 @@ maintained nor monitored in any way.
 
 ## Contact
 Please feel free to open an issue or contact us personally if you have questions, need help, or need explanations.
-Write to one of the following email addresses:
+Write to one of the following email addresses, and maybe put one other in the cc:
 
 edgarschoenfeld@live.de  
 vad221@gmail.com  
