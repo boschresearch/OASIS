@@ -56,7 +56,7 @@ checkpoints_dir
 ├── oasis_cityscapes_pretrained  
 └── oasis_coco_pretrained
 ```
-*Note: The ADE20K checkpoint is already available, the others are uploaded soon.*
+*Note: The ADE20K and Cityscapes checkpoints are already available, the COCO checkpoint will be uploaded soon.*
 
 You can generate images with a pre-trained checkpoint via ```test.py```. Using the example of ADE20K:
 ```
