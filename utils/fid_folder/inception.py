@@ -174,7 +174,7 @@ def fid_inception_v3():
     """
     inception = models.inception_v3(num_classes=1008,
                                     aux_logits=False,
-                                    pretrained=True)
+                                    pretrained=False)
     inception.Mixed_5b = FIDInceptionA(192, pool_features=32)
     inception.Mixed_5c = FIDInceptionA(256, pool_features=64)
     inception.Mixed_5d = FIDInceptionA(288, pool_features=64)
@@ -184,8 +184,11 @@ def fid_inception_v3():
     inception.Mixed_6e = FIDInceptionC(768, channels_7x7=192)
     inception.Mixed_7b = FIDInceptionE_1(1280)
     inception.Mixed_7c = FIDInceptionE_2(2048)
-
-
+   
+    import ssl
+    ssl._create_default_https_context = ssl._create_unverified_context
+    state_dict = load_state_dict_from_url(FID_WEIGHTS_URL, progress=True)
+    inception.load_state_dict(state_dict)
     return inception
 
 
