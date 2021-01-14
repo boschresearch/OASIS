@@ -53,9 +53,8 @@ The checkpoints for the pre-trained models are available [here](https://www.drop
 ```
 checkpoints_dir
 ├── oasis_ade20k_pretrained                   
-├── oasis_cityscapes_pretrained                   
-├── oasis_coco_pretrained                     
-└── oasis_ade_outdoor_pretrained
+├── oasis_cityscapes_pretrained  
+└── oasis_coco_pretrained
 ```
 *Note: The ADE20K checkpoint is already available, the others are uploaded soon.*
 
