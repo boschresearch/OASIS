@@ -49,7 +49,7 @@ The FID is computed on the fly during training, using the popular PyTorch FID im
 
 ## Pretrained models
 
-The checkpoints for the pre-trained models are available [here](https://www.dropbox.com/sh/nf6of02pyk84zjg/AAC8hnnj0T_MAiPx3tzdAyiWa?dl=0) as zip files. Copy them into the checkpoints folder (the default is ```./checkpoints```) and unzip them. The folder structure should be  
+The checkpoints for the pre-trained models are available [here](https://www.dropbox.com/sh/nf6of02pyk84zjg/AAC8hnnj0T_MAiPx3tzdAyiWa?dl=0) as zip files. Copy them into the checkpoints folder (the default is ```./checkpoints```, create it if it doesn't yet exist) and unzip them. The folder structure should be  
 ```
 checkpoints_dir
 ├── oasis_ade20k_pretrained                   
@@ -64,11 +64,13 @@ You can generate images with a pre-trained checkpoint via ```test.py```. Using t
 python test.py --dataset_mode ade20k --name oasis_ade20k_pretrained \
 --dataroot path_to/ADEChallenge2016
 ```
+This script will create a folder named ```./results``` in which the resulting images are saved.
+
 If you want to continue training from this checkpoint, use ```train.py``` with the same ```--name``` parameter and the ```--continue_train``` flag.
 ## Citation
 If you use this work please cite
 ```
-@inproceedings{schonfeld_sushko,
+@inproceedings{schonfeld_sushko_iclr2021,
   title={You Only Need Adversarial Supervision for Semantic Image Synthesis},
   author={Sch{\"o}nfeld, Edgar and Sushko, Vadim and Zhang, Dan and Gall, Juergen and Schiele, Bernt and Khoreva, Anna},
   booktitle={International Conference on Learning Representations},
