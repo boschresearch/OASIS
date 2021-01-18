@@ -37,7 +37,8 @@ For COCO-Stuff, Cityscapes or ADE20K, please follow the instructions for the dat
 ## Training the model
 
 To train the model, execute the training scripts in the ```scripts``` folder. In these scripts you first need to specify the path to the data folder. Via the ```--name``` parameter the experiment can be given a unique identifier. The experimental results are then saved in the folder ```./checkpoints```, where a new folder for each run is created with the specified experiment name. You can also specify another folder for the checkpoints using the ```--checkpoints_dir``` parameter.
-If you want to continue training, start the respective script with the ```--continue_train``` flag. Have a look at ```config.py``` for other options you can specify.
+If you want to continue training, start the respective script with the ```--continue_train``` flag. Have a look at ```config.py``` for other options you can specify.  
+Training on 4 NVIDIA Tesla V100 (32GB) is recommended.
 
 ## Testing the model
 
