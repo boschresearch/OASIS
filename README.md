@@ -46,7 +46,7 @@ To test a trained model, execute the testing scripts in the ```scripts``` folder
 
 ## Measuring FID
 
-The FID is computed on the fly during training, using the popular PyTorch FID implementation from https://github.com/mseitzer/pytorch-fid. At the beginning of training, the inception moments of the real images are computed before the actual training loop starts. How frequently the FID should be evaluated is controlled via the parameter ```--freq_fid```, which is set to 5000 steps by default. The inception net that is used for FID computation automatically downloads a pre-trained inception net checkpoint. If that automatic download fails, for instance because your server has restricted internet access, get the checkpoint named ```pt_inception-2015-12-05-6726825d.pth``` from [here](https://www.dropbox.com/sh/nf6of02pyk84zjg/AAC8hnnj0T_MAiPx3tzdAyiWa?dl=0) and place it in ```/utils/fid_folder/```.
+The FID is computed on the fly during training, using the popular PyTorch FID implementation from https://github.com/mseitzer/pytorch-fid. At the beginning of training, the inception moments of the real images are computed before the actual training loop starts. How frequently the FID should be evaluated is controlled via the parameter ```--freq_fid```, which is set to 5000 steps by default. The inception net that is used for FID computation automatically downloads a pre-trained inception net checkpoint. If that automatic download fails, for instance because your server has restricted internet access, get the checkpoint named ```pt_inception-2015-12-05-6726825d.pth``` from [here](https://www.dropbox.com/sh/nf6of02pyk84zjg/AAC8hnnj0T_MAiPx3tzdAyiWa?dl=0) and place it in ```/utils/fid_folder/```. In this case, do not forget to replace ```load_state_dict_from_url``` function accordingly.
 
 ## Pretrained models
 
@@ -66,7 +66,7 @@ python test.py --dataset_mode ade20k --name oasis_ade20k_pretrained \
 ```
 This script will create a folder named ```./results``` in which the resulting images are saved.
 
-If you want to continue training from this checkpoint, use ```train.py``` with the same ```--name``` parameter and the ```--continue_train``` flag.
+If you want to continue training from this checkpoint, use ```train.py``` with the same ```--name``` parameter and add ```--continue_train --which_iter best```.
 ## Citation
 If you use this work please cite
 ```
