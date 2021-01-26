@@ -36,6 +36,7 @@ def add_all_arguments(parser, train):
     parser.add_argument('--dataset_mode', type=str, default='coco', help='this option indicates which dataset should be loaded')
     parser.add_argument('--no_flip', action='store_true', help='if specified, do not flip the images for data argumentation')
     parser.add_argument('--ddp_apex', action='store_true', default = False, help="don't set this flag manually, this is automatically set to true when using DDP training")
+    parser.add_argument('--amp_implemention', type=str, default='pytorch_native', choices =['apex', 'pytorch_native'],  help="choose which implementation to use for mixed precision training")
 
     # for generator
     parser.add_argument('--num_res_blocks', type=int, default=6, help='number of residual blocks in G and D')

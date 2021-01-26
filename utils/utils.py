@@ -166,6 +166,8 @@ def save_networks(opt, cur_iter, model, latest=False, best=False):
     else:
         module = model.module
 
+    
+
     if latest:
         torch.save(module.netG.state_dict(), path+'/%s_G.pth' % ("latest"))
         torch.save(module.netD.state_dict(), path+'/%s_D.pth' % ("latest"))
