@@ -11,8 +11,17 @@ def get_dataset_name(mode):
     else:
         ValueError("There is no such dataset regime as %s" % mode)
 
+def data_sampler(dataset, shuffle, distributed):
+    if distributed:
+        return torch.utils.data.distributed.DistributedSampler(dataset, shuffle=shuffle)
 
-def get_dataloaders(opt):
+    if shuffle:
+        return torch.utils.data.RandomSampler(dataset)
+
+    else:
+        return torch.utils.data.SequentialSampler(dataset)
+
+def get_dataloaders(opt, distributed_data_parallel = False):
     dataset_name   = get_dataset_name(opt.dataset_mode)
 
     file = __import__("dataloaders."+dataset_name)
@@ -20,7 +29,21 @@ def get_dataloaders(opt):
     dataset_val   = file.__dict__[dataset_name].__dict__[dataset_name](opt, for_metrics=True)
     print("Created %s, size train: %d, size val: %d" % (dataset_name, len(dataset_train), len(dataset_val)))
 
-    dataloader_train = torch.utils.data.DataLoader(dataset_train, batch_size = opt.batch_size, shuffle = True, drop_last=True)
-    dataloader_val = torch.utils.data.DataLoader(dataset_val, batch_size = opt.batch_size, shuffle = False, drop_last=False)
+    if distributed_data_parallel:
+        dataloader_train = torch.utils.data.DataLoader(
+            dataset_train,
+            batch_size=opt.batch_size//opt.num_gpus,
+            sampler=data_sampler(dataset_train, shuffle=True, distributed=opt.distributed),
+            drop_last=True,
+        )
+        dataloader_val = torch.utils.data.DataLoader(
+            dataset_val,
+            batch_size=opt.batch_size//opt.num_gpus,
+            sampler=data_sampler(dataset_val, shuffle=True, distributed=opt.distributed),
+            drop_last=True,
+        )
+    else:
+        dataloader_train = torch.utils.data.DataLoader(dataset_train, batch_size = opt.batch_size, shuffle = True, drop_last=True)
+        dataloader_val = torch.utils.data.DataLoader(dataset_val, batch_size = opt.batch_size, shuffle = False, drop_last=False)
 
     return dataloader_train, dataloader_val

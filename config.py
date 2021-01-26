@@ -35,6 +35,7 @@ def add_all_arguments(parser, train):
     parser.add_argument('--dataroot', type=str, default='./datasets/cityscapes/', help='path to dataset root')
     parser.add_argument('--dataset_mode', type=str, default='coco', help='this option indicates which dataset should be loaded')
     parser.add_argument('--no_flip', action='store_true', help='if specified, do not flip the images for data argumentation')
+    parser.add_argument('--ddp_apex', action='store_true', default = False, help="don't set this flag manually, this is automatically set to true when using DDP training")
 
     # for generator
     parser.add_argument('--num_res_blocks', type=int, default=6, help='number of residual blocks in G and D')
@@ -70,6 +71,7 @@ def add_all_arguments(parser, train):
     else:
         parser.add_argument('--results_dir', type=str, default='./results/', help='saves testing results here.')
         parser.add_argument('--ckpt_iter', type=str, default='best', help='which epoch to load to evaluate a model')
+
     return parser
 
 

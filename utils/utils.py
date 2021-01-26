@@ -124,11 +124,16 @@ class losses_saver():
 
 def update_EMA(model, cur_iter, dataloader, opt, force_run_stats=False):
     # update weights based on new generator weights
+    if opt.ddp_apex:
+        module = model
+    else:
+        module = model.module
+    #print("keys", module.netG.state_dict().keys())
     with torch.no_grad():
-        for key in model.module.netEMA.state_dict():
-            model.module.netEMA.state_dict()[key].data.copy_(
-                model.module.netEMA.state_dict()[key].data * opt.EMA_decay +
-                model.module.netG.state_dict()[key].data   * (1 - opt.EMA_decay)
+        for key in module.netEMA.state_dict():
+            module.netEMA.state_dict()[key].data.copy_(
+               module.netEMA.state_dict()[key].data * opt.EMA_decay +
+               module.netG.state_dict()[key].data   * (1 - opt.EMA_decay)
             )
     # collect running stats for batchnorm before FID computation, image or network saving
     condition_run_stats = (force_run_stats or
@@ -137,12 +142,16 @@ def update_EMA(model, cur_iter, dataloader, opt, force_run_stats=False):
                            cur_iter % opt.freq_save_ckpt == 0 or
                            cur_iter % opt.freq_save_latest == 0
                            )
+    #print("condition_run_stats",condition_run_stats)
     if condition_run_stats:
         with torch.no_grad():
             num_upd = 0
             for i, data_i in enumerate(dataloader):
-                image, label = models.preprocess_input(opt, data_i)
-                fake = model.module.netEMA(label)
+                if opt.ddp_apex:
+                    image, label = models.preprocess_input_ddp(opt, data_i, device = opt.rank )
+                else:
+                    image, label = models.preprocess_input(opt, data_i)
+                fake = module.netEMA(label)
                 num_upd += 1
                 if num_upd > 50:
                     break
@@ -151,26 +160,50 @@ def update_EMA(model, cur_iter, dataloader, opt, force_run_stats=False):
 def save_networks(opt, cur_iter, model, latest=False, best=False):
     path = os.path.join(opt.checkpoints_dir, opt.name, "models")
     os.makedirs(path, exist_ok=True)
+
+    if opt.ddp_apex:
+        module = model
+    else:
+        module = model.module
+
     if latest:
-        torch.save(model.module.netG.state_dict(), path+'/%s_G.pth' % ("latest"))
-        torch.save(model.module.netD.state_dict(), path+'/%s_D.pth' % ("latest"))
+        torch.save(module.netG.state_dict(), path+'/%s_G.pth' % ("latest"))
+        torch.save(module.netD.state_dict(), path+'/%s_D.pth' % ("latest"))
         if not opt.no_EMA:
-            torch.save(model.module.netEMA.state_dict(), path+'/%s_EMA.pth' % ("latest"))
+            torch.save(module.netEMA.state_dict(), path+'/%s_EMA.pth' % ("latest"))
         with open(os.path.join(opt.checkpoints_dir, opt.name)+"/latest_iter.txt", "w") as f:
             f.write(str(cur_iter))
     elif best:
-        torch.save(model.module.netG.state_dict(), path+'/%s_G.pth' % ("best"))
-        torch.save(model.module.netD.state_dict(), path+'/%s_D.pth' % ("best"))
+        torch.save(module.netG.state_dict(), path+'/%s_G.pth' % ("best"))
+        torch.save(module.netD.state_dict(), path+'/%s_D.pth' % ("best"))
         if not opt.no_EMA:
-            torch.save(model.module.netEMA.state_dict(), path+'/%s_EMA.pth' % ("best"))
+            torch.save(module.netEMA.state_dict(), path+'/%s_EMA.pth' % ("best"))
         with open(os.path.join(opt.checkpoints_dir, opt.name)+"/best_iter.txt", "w") as f:
             f.write(str(cur_iter))
     else:
-        torch.save(model.module.netG.state_dict(), path+'/%d_G.pth' % (cur_iter))
-        torch.save(model.module.netD.state_dict(), path+'/%d_D.pth' % (cur_iter))
+        torch.save(module.netG.state_dict(), path+'/%d_G.pth' % (cur_iter))
+        torch.save(module.netD.state_dict(), path+'/%d_D.pth' % (cur_iter))
         if not opt.no_EMA:
-            torch.save(model.module.netEMA.state_dict(), path+'/%d_EMA.pth' % (cur_iter))
+            torch.save(module.netEMA.state_dict(), path+'/%d_EMA.pth' % (cur_iter))
 
+def set_state(model, mode, opt):
+    if mode == "eval":
+        if opt.ddp_apex:
+            model.netD.eval()
+            model.netG.eval()
+            model.netEMA.eval()
+            module = model
+        else:
+            model.eval()
+            module = model.module
+    elif mode == "train":
+        if opt.ddp_apex:
+            model.netD.train()
+            model.netG.train()
+            model.netEMA.train()
+        else:
+            model.train()
+    return model
 
 class image_saver():
     def __init__(self, opt):
@@ -186,15 +219,26 @@ class image_saver():
         self.save_images(label, "label", cur_iter, is_label=True)
         self.save_images(image, "real", cur_iter)
         with torch.no_grad():
-            model.eval()
-            fake = model.module.netG(label)
+
+            model = set_state(model, "eval", self.opt)
+
+            if self.opt.ddp_apex:
+                module = model
+            else:
+                module = model.module
+
+            fake = module.netG(label)
             self.save_images(fake, "fake", cur_iter)
-            model.train()
+
+            model = set_state(model, "train", self.opt)
+
             if not self.opt.no_EMA:
-                model.eval()
-                fake = model.module.netEMA(label)
+                model = set_state(model, "eval", self.opt)
+
+                fake = module.netEMA(label)
                 self.save_images(fake, "fake_ema", cur_iter)
-                model.train()
+
+                model = set_state(model, "train", self.opt)
 
     def save_images(self, batch, name, cur_iter, is_label=False):
         fig = plt.figure()
@@ -272,8 +316,3 @@ def labelcolormap(N):
             cmap[i, 1] = g
             cmap[i, 2] = b
     return cmap
-
-
-
-
-
