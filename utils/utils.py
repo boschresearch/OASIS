@@ -80,7 +80,7 @@ class losses_saver():
         os.makedirs(self.path, exist_ok=True)
         for name in self.name_list:
             if opt.continue_train:
-                self.losses[name] = np.load(self.path+"/losses.npy").item()[name]
+                self.losses[name] = np.load(self.path+"/losses.npy", allow_pickle = True).item()[name]
             else:
                 self.losses[name] = list()
 

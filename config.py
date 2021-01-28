@@ -119,7 +119,7 @@ def load_options(opt):
 
 
 def load_iter(opt):
-    if opt.which_iter == "latest":
+    if opt.which_iter == "latest" or opt.which_iter == "best":
         with open(os.path.join(opt.checkpoints_dir, opt.name, "latest_iter.txt"), "r") as f:
             res = int(f.read())
             return res
