@@ -4,14 +4,18 @@ from torchvision import transforms as TR
 import os
 from PIL import Image
 import numpy as np
-
+import os, psutil
+import time
+from tqdm import tqdm
 
 class Ade20kDataset(torch.utils.data.Dataset):
-    def __init__(self, opt, for_metrics):
+    def __init__(self, opt, for_metrics, load_in_ram = False):
         if opt.phase == "test" or for_metrics:
             opt.load_size = 256
         else:
             opt.load_size = 286
+
+        opt.load_in_ram = load_in_ram
         opt.crop_size = 256
         opt.label_nc = 150
         opt.contain_dontcare_label = True
@@ -23,15 +27,43 @@ class Ade20kDataset(torch.utils.data.Dataset):
         self.opt = opt
         self.for_metrics = for_metrics
         self.images, self.labels, self.paths = self.list_images()
+        self.loaded_images = []
+        self.loaded_labels = []
+
+        if self.opt.load_in_ram:
+            process = psutil.Process(os.getpid())
+            pbar = tqdm(range(len(self.images)))
+            for idx in pbar:
+                temp_image = Image.open(os.path.join(self.paths[0], self.images[idx])).convert('RGB')
+                temp_label = Image.open(os.path.join(self.paths[1], self.labels[idx]))
+                image = temp_image.copy()
+                label = temp_label.copy()
+                temp_image.close()
+                temp_label.close()
+                self.loaded_images.append(image)
+                self.loaded_labels.append(label)
+                pbar.set_description(str(idx) + " " + str(float(process.memory_info().rss)*9.31e-10)[:4] + " GB in RAM")  # in bytes --> gb
+
+            time.sleep(5.0)
 
     def __len__(self,):
         return len(self.images)
 
     def __getitem__(self, idx):
-        image = Image.open(os.path.join(self.paths[0], self.images[idx])).convert('RGB')
-        label = Image.open(os.path.join(self.paths[1], self.labels[idx]))
+        #print(self.paths)
+        if self.opt.load_in_ram:
+            image = self.loaded_images[idx]
+            label = self.loaded_labels[idx]
+        else:
+            image = Image.open(os.path.join(self.paths[0], self.images[idx])).convert('RGB')
+            label = Image.open(os.path.join(self.paths[1], self.labels[idx]))
+        #print(label.size)
         image, label = self.transforms(image, label)
         label = label * 255
+        #print(label.size())
+        if label.size(0)==3:
+            label = label[0,:,:].unsqueeze(0)
+
         return {"image": image, "label": label, "name": self.images[idx]}
 
     def list_images(self):
@@ -40,8 +72,8 @@ class Ade20kDataset(torch.utils.data.Dataset):
         path_lab = os.path.join(self.opt.dataroot, "annotations", mode)
         img_list = os.listdir(path_img)
         lab_list = os.listdir(path_lab)
-        img_list = [filename for filename in img_list if ".png" in filename or ".jpg" in filename]
-        lab_list = [filename for filename in lab_list if ".png" in filename or ".jpg" in filename]
+        img_list = [filename for filename in img_list if ".jpg" in filename]
+        lab_list = [filename for filename in lab_list if ".png" in filename]
         images = sorted(img_list)
         labels = sorted(lab_list)
         assert len(images)  == len(labels), "different len of images and labels %s - %s" % (len(images), len(labels))
@@ -68,6 +100,8 @@ class Ade20kDataset(torch.utils.data.Dataset):
         # to tensor
         image = TR.functional.to_tensor(image)
         label = TR.functional.to_tensor(label)
+        #print("l", label.size())
         # normalize
         image = TR.functional.normalize(image, (0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         return image, label
+
