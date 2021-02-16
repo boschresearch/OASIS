@@ -126,7 +126,7 @@ dependencies:
   - zlib=1.2.11
   - zstd=1.4.4
   - pip:
-    - intel-openmp=2019.5
+    - intel-openmp
     - pyinstrument==3.2.0
     - pyinstrument-cext==0.2.2
     - pyqt5-sip==4.19.18
