@@ -3,7 +3,7 @@
 Official PyTorch implementation of the ICLR 2021 paper "You Only Need Adversarial Supervision for Semantic Image Synthesis". The code allows the users to
 reproduce and extend the results reported in the study. Please cite the paper when reporting, reproducing or extending the results.
 
-[[OpenReview](https://openreview.net/forum?id=yvQKLaqNE6M)]  [[Arxiv](https://arxiv.org/abs/2012.04781)]  [[Video](https://www.youtube.com/watch?v=vUm6vurIwyM)]  
+[[OpenReview](https://openreview.net/forum?id=yvQKLaqNE6M)]  [[Arxiv](https://arxiv.org/abs/2012.04781)]  [[5min Video Summary](https://www.youtube.com/watch?v=vUm6vurIwyM)]  
 
 # Overview
 
