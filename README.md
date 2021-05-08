@@ -82,12 +82,14 @@ If you want to continue training from this checkpoint, use ```train.py``` with t
 ## Citation
 If you use this work please cite
 ```
-@inproceedings{schonfeld_sushko_iclr2021,
-  title={You Only Need Adversarial Supervision for Semantic Image Synthesis},
-  author={Sch{\"o}nfeld, Edgar and Sushko, Vadim and Zhang, Dan and Gall, Juergen and Schiele, Bernt and Khoreva, Anna},
-  booktitle={International Conference on Learning Representations},
-  year={2021}
-}   
+@inproceedings{
+sch{\"o}nfeld2021you,
+title={You Only Need Adversarial Supervision for Semantic Image Synthesis},
+author={Edgar Sch{\"o}nfeld and Vadim Sushko and Dan Zhang and Juergen Gall and Bernt Schiele and Anna Khoreva},
+booktitle={International Conference on Learning Representations},
+year={2021},
+url={https://openreview.net/forum?id=yvQKLaqNE6M}
+}
 ```
 
 ## License
