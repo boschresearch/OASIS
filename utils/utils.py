@@ -125,10 +125,12 @@ class losses_saver():
 def update_EMA(model, cur_iter, dataloader, opt, force_run_stats=False):
     # update weights based on new generator weights
     with torch.no_grad():
-        for key in model.module.netEMA.state_dict():
-            model.module.netEMA.state_dict()[key].data.copy_(
-                model.module.netEMA.state_dict()[key].data * opt.EMA_decay +
-                model.module.netG.state_dict()[key].data   * (1 - opt.EMA_decay)
+        state_EMA = model.netEMA.state_dict()
+        state_G = model.netG.state_dict()
+        for key in state_EMA:
+            state_EMA[key].data.copy_(
+                state_EMA[key].data * opt.EMA_decay +
+                state_G[key].data   * (1 - opt.EMA_decay)
             )
     # collect running stats for batchnorm before FID computation, image or network saving
     condition_run_stats = (force_run_stats or
