@@ -125,8 +125,8 @@ class losses_saver():
 def update_EMA(model, cur_iter, dataloader, opt, force_run_stats=False):
     # update weights based on new generator weights
     with torch.no_grad():
-        state_EMA = model.netEMA.state_dict()
-        state_G = model.netG.state_dict()
+        state_EMA = model.module.netEMA.state_dict()
+        state_G = model.module.netG.state_dict()
         for key in state_EMA:
             state_EMA[key].data.copy_(
                 state_EMA[key].data * opt.EMA_decay +
