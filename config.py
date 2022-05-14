@@ -82,7 +82,7 @@ def set_dataset_default_lm(opt, parser):
         parser.set_defaults(lambda_labelmix=5.0)
         parser.set_defaults(freq_fid=2500)
         parser.set_defaults(EMA_decay=0.999)
-    if opt.dataset_mode == "coco":
+    if opt.dataset_mode == "coco" or opt.dataset_mode == "lvis":
         parser.set_defaults(lambda_labelmix=10.0)
         parser.set_defaults(EMA_decay=0.9999)
         parser.set_defaults(num_epochs=100)
