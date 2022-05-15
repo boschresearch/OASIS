@@ -35,6 +35,7 @@ def add_all_arguments(parser, train):
     parser.add_argument('--dataroot', type=str, default='./datasets/cityscapes/', help='path to dataset root')
     parser.add_argument('--dataset_mode', type=str, default='coco', help='this option indicates which dataset should be loaded')
     parser.add_argument('--no_flip', action='store_true', help='if specified, do not flip the images for data argumentation')
+    parser.add_argument('--num_workers', type=int, default=0, help='num_workers argument for dataloader')
 
     # for generator
     parser.add_argument('--num_res_blocks', type=int, default=6, help='number of residual blocks in G and D')
