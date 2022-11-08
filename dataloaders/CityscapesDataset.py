@@ -53,9 +53,9 @@ class CityscapesDataset(torch.utils.data.Dataset):
     def transforms(self, image, label):
         assert image.size == label.size
         # resize
-        new_width, new_height = (int(self.opt.load_size / self.opt.aspect_ratio), self.opt.load_size)
-        image = TR.functional.resize(image, (new_width, new_height), Image.BICUBIC)
-        label = TR.functional.resize(label, (new_width, new_height), Image.NEAREST)
+        new_height, new_width = (int(self.opt.load_size / self.opt.aspect_ratio), self.opt.load_size)
+        image = TR.functional.resize(image, (new_height, new_width), Image.BICUBIC)
+        label = TR.functional.resize(label, (new_height, new_width), Image.NEAREST)
         # flip
         if not (self.opt.phase == "test" or self.opt.no_flip or self.for_metrics):
             if random.random() < 0.5:
